@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LibreriaCoche;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -21,12 +22,14 @@ namespace Banco
         Cuenta cuenta;
         MovimientoCuenta movimientoCuenta;
 
+
         private void CrearCuentabutton1_Click(object sender, EventArgs e)
         {
             cliente = new Cliente(Identidadtxt.Text, NombreClientetxt.Text);
 
             cuenta = new Cuenta(NumeroCuentatxt.Text, cliente, DateTime.Now, 0);
 
+            Saldotxt.Text = cuenta.Saldo.ToString("N");
 
         }
 
@@ -58,7 +61,30 @@ namespace Banco
                                              " con fecha: " + movimientoCuenta.Fecha
                     );
 
-                Saldotxt.Text = cuenta.Saldo.ToString();
+                Saldotxt.Text = cuenta.Saldo.ToString("N");
+            }
+            else if(TipoMovimientocomboBox1.Text == "Retiro")
+            {
+                bool pudoRetirar = cuenta.Ratirar(Convert.ToDecimal(MontoMovimientotxt.Text));
+
+                if (pudoRetirar)
+                {
+                    movimientoCuenta = new MovimientoCuenta(cuenta, DateTime.Now, 
+                                                            Convert.ToDecimal(MontoMovimientotxt.Text),
+                                                            TipoMovimientocomboBox1.Text);
+
+                    MovimientoslistBox1.Items.Add(
+                                             "Retiro a la cuenta N. " + cuenta.NumeroCuenta +
+                                             " por la cantidad de L. " + movimientoCuenta.Monto +
+                                             " con fecha: " + movimientoCuenta.Fecha);
+
+                    Saldotxt.Text = cuenta.Saldo.ToString("N");
+
+                }
+                else
+                {
+                    MessageBox.Show("La cuenta N. " + cuenta.NumeroCuenta + "no tiene saldo disponible para transaccionar");
+                }
             }
         }
     }

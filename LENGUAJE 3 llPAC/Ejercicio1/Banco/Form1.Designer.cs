@@ -171,8 +171,10 @@
             // 
             // Saldotxt
             // 
+            this.Saldotxt.Enabled = false;
             this.Saldotxt.Location = new System.Drawing.Point(93, 53);
             this.Saldotxt.Name = "Saldotxt";
+            this.Saldotxt.ReadOnly = true;
             this.Saldotxt.Size = new System.Drawing.Size(137, 20);
             this.Saldotxt.TabIndex = 7;
             // 
